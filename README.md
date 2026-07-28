@@ -41,7 +41,7 @@ Esta guía está destinada al personal subalterno para la correcta clasificació
 | **Hurto** | Sustracción simple aprovechando un descuido o puerta abierta. |
 | **Mechera** | Sustracción en comercios ocultando mercadería sin violencia. |
 | **Oportunista** | Apoderamiento de un bien momentáneamente desatendido. |
-| **Pertenencia** | Sustracción de efectos en viviendas u oficinas con acceso previo. |
+| **Pertenecia** | Sustracción de efectos en viviendas u oficinas con acceso previo. |
 | **Punga** | Sustracción por destreza y descuido en aglomeraciones. |
 | **Roba Ruedas / Patentes** | Sustracción de componentes específicos de vehículos estacionados. |
 | **Viuda Negra** | Sustracción con suministro de sustancias inhibidoras. |
