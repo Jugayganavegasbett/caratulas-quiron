@@ -2,6 +2,10 @@
 
 Esta guía está destinada al personal para la correcta carga, clasificación de hechos delictivos y estandarización de criterios operativos en el sistema Quirón.
 
+<div style="background-color: #f1f8ff; border-left: 5px solid #0366d6; padding: 12px 16px; margin: 15px 0; border-radius: 4px;">
+  <b>⚠️ Aviso operativo:</b> Verificar siempre la concordancia entre la franja horaria y la hora real del hecho antes de confirmar la carga en el sistema.
+</div>
+
 ---
 
 ## 📑 SECCIÓN 1: Instrucciones de Carga por Campo
@@ -12,7 +16,7 @@ Esta guía está destinada al personal para la correcta carga, clasificación de
 <table width="100%" border="1" cellpadding="8" style="border-collapse: collapse;">
   <tr style="background-color: #f6f8fa;">
     <th align="left" width="25%">Campo</th>
-    <th align="left" width="75%">Criterio y Instrucciones de Carga</th>
+    <th align="left" width="75%">Criterio e Instrucciones de Carga</th>
   </tr>
   <tr><td><b>Partido</b></td><td>Seleccionar el partido donde fue cometido el hecho (desplegable).</td></tr>
   <tr><td><b>Localidad</b></td><td>Seleccionar la localidad donde fue cometido el hecho (desplegable).</td></tr>
@@ -20,7 +24,7 @@ Esta guía está destinada al personal para la correcta carga, clasificación de
   <tr><td><b>Lugar del hecho</b></td><td>Dirección exacta donde se cometió el hecho.</td></tr>
   <tr><td><b>Coordenadas</b></td><td>Se cargan de manera automática; de lo contrario, utilizar Google Maps para buscar y copiar las coordenadas exactas.</td></tr>
   <tr><td><b>Fecha del hecho</b></td><td>Colocar la fecha en que fue cometido el hecho (o fecha de denuncia si se desconoce con precisión).</td></tr>
-  <tr><td><b>Hora del hecho</b></td><td>Horario en el que ocurrió el hecho. Si no consta en el acta, colocar excepcionalmentel el horario de carga en el SID. <br><b>Franjas horarias de análisis:</b> 00:00 a 06:00 hs, 06:00 a 12:00 hs, 12:00 a 18:00 hs, y 18:00 a 24:00 hs.</td></tr>
+  <tr><td><b>Hora del hecho</b></td><td>Horario en el que ocurrió el hecho. Si no consta en el acta, colocar excepcionalmente el horario de carga en el SID. <br><b>Franjas horarias de análisis:</b> 00:00 a 06:00 hs, 06:00 a 12:00 hs, 12:00 a 18:00 hs, y 18:00 a 24:00 hs.</td></tr>
   <tr><td><b>Tipo de lugar</b></td><td>Locación física del ilícito (finca, vía pública, comercio, establecimiento educativo, etc.) mediante desplegable.</td></tr>
   <tr><td><b>Carátula</b></td><td>Calificación legal del hecho (desplegable). <i>Tildar la casilla correspondiente en caso de ser en grado de tentativa.</i></td></tr>
   <tr><td><b>Modalidad</b></td><td>Colocar según el instructivo técnico correspondiente a cada delito analizado.</td></tr>
@@ -37,10 +41,20 @@ Esta guía está destinada al personal para la correcta carga, clasificación de
 
 ## 🔍 SECCIÓN 2: Buscador de Carátulas y Modalidades
 
-Escriba en la caja para filtrar de forma inmediata cualquier delito, modalidad o criterio operativo:
+Escriba en la caja o utilice los botones de acceso rápido para filtrar de forma inmediata:
 
-<div style="margin: 20px 0;">
-  <input type="text" id="buscadorGuia" onkeyup="filtrarGuia()" placeholder="🔍 Escriba aquí (ej: motochorro, estruche, estafa, arma...)" style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ccc; border-radius: 6px;">
+<div style="margin: 15px 0;">
+  <input type="text" id="buscadorGuia" onkeyup="filtrarGuia()" placeholder="🔍 Escriba aquí (ej: motochorro, estruche, estafa, arma...)" style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+</div>
+
+<!-- Botones de acceso rápido por categoría -->
+<div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 8px;">
+  <button onclick="filtrarPorBoton('robo')" style="padding: 8px 14px; cursor: pointer; border: 1px solid #0366d6; background: #0366d6; color: white; border-radius: 4px; font-weight: bold;">Robo</button>
+  <button onclick="filtrarPorBoton('hurto')" style="padding: 8px 14px; cursor: pointer; border: 1px solid #ccc; background: #f6f8fa; border-radius: 4px; font-weight: bold;">Hurto</button>
+  <button onclick="filtrarPorBoton('estafa')" style="padding: 8px 14px; cursor: pointer; border: 1px solid #ccc; background: #f6f8fa; border-radius: 4px; font-weight: bold;">Estafa</button>
+  <button onclick="filtrarPorBoton('homicidio')" style="padding: 8px 14px; cursor: pointer; border: 1px solid #ccc; background: #f6f8fa; border-radius: 4px; font-weight: bold;">Homicidio</button>
+  <button onclick="filtrarPorBoton('armas')" style="padding: 8px 14px; cursor: pointer; border: 1px solid #ccc; background: #f6f8fa; border-radius: 4px; font-weight: bold;">Armas</button>
+  <button onclick="mostrarTodo()" style="padding: 8px 14px; cursor: pointer; border: 1px solid #ccc; background: #e1e4e8; border-radius: 4px; font-weight: bold;">Ver Todo</button>
 </div>
 
 <div id="contenedorGuia">
@@ -193,12 +207,27 @@ Escriba en la caja para filtrar de forma inmediata cualquier delito, modalidad o
 function filtrarGuia() {
   let input = document.getElementById('buscadorGuia');
   let filtro = input.value.toLowerCase();
+  ejecutarFiltro(filtro);
+}
+
+function filtrarPorBoton(categoria) {
+  let input = document.getElementById('buscadorGuia');
+  input.value = categoria;
+  ejecutarFiltro(categoria);
+}
+
+function mostrarTodo() {
+  let input = document.getElementById('buscadorGuia');
+  input.value = "";
+  ejecutarFiltro("");
+}
+
+function ejecutarFiltro(filtro) {
   let detalles = document.getElementsByTagName('details');
 
   for (let i = 0; i < detalles.length; i++) {
     let detalle = detalles[i];
-    // Omitimos el primer details que corresponde a la guía de campos para que no se oculte al buscar carátulas
-    if (i === 0) continue; 
+    if (i === 0) continue; // Omitir la guía de campos superior
 
     let filas = detalle.getElementsByTagName('tr');
     let encontroEnDetalle = false;
