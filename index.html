@@ -267,17 +267,42 @@
     <button class="float-btn" onclick="document.getElementById('seccion2').scrollIntoView()">IR A CARÁTULAS ↓</button>
 
     <script>
-        function showApp() { document.getElementById('home').style.display = 'none'; document.getElementById('app').style.display = 'block'; }
-        
-        function filtrarGuia() {
-            let filtro = document.getElementById('buscadorGuia').value.toLowerCase();
-            let detalles = document.querySelectorAll('#contenedorGuia details');
-            detalles.forEach(d => {
-                let texto = d.textContent.toLowerCase();
-                d.style.display = texto.includes(filtro) ? "" : "none";
-                if(filtro !== "") d.open = true;
-            });
+        <script>
+function showApp() { 
+    document.getElementById('home').style.display = 'none'; 
+    document.getElementById('app').style.display = 'block'; 
+}
+
+function filtrarGuia() {
+    let input = document.getElementById('buscadorGuia');
+    let filtro = input.value.toLowerCase();
+    let detalles = document.querySelectorAll('#contenedorGuia details');
+
+    detalles.forEach(detalle => {
+        let filas = detalle.querySelectorAll('table tr');
+        let encontroEnEstaTabla = false;
+
+        // Recorremos las filas (empezamos en 1 para saltear el encabezado)
+        for (let i = 1; i < filas.length; i++) {
+            let textoFila = filas[i].textContent.toLowerCase();
+            if (textoFila.includes(filtro)) {
+                filas[i].style.display = ""; // Muestra la fila
+                encontroEnEstaTabla = true;
+            } else {
+                filas[i].style.display = "none"; // Oculta la fila
+            }
         }
-    </script>
+
+        // Si el buscador está vacío, mostramos todo y cerramos detalles, si hay filtro, abrimos
+        if (filtro === "") {
+            detalle.style.display = "";
+            detalle.open = false; 
+        } else {
+            detalle.style.display = encontroEnEstaTabla ? "" : "none";
+            detalle.open = encontroEnEstaTabla; // Abre automáticamente si encontró algo
+        }
+    });
+}
+</script>
 </body>
 </html>
