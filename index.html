@@ -25,6 +25,13 @@
     <title>Sistema Quirón - Guía Operativa</title>
     <style>
         body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
+        .logo-home { width: 220px; border-radius: 50%; display: block; margin: 80px auto 2<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Quirón - Guía Operativa</title>
+    <style>
+        body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; }
         .logo-home { width: 220px; border-radius: 50%; display: block; margin: 80px auto 20px; cursor: pointer; border: 4px solid #333; transition: transform 0.3s; }
         .logo-home:hover { transform: scale(1.05); }
         .container { max-width: 900px; margin: auto; display: none; }
@@ -84,8 +91,8 @@
         <section id="seccion2">
             <h3>🔍 SECCIÓN 2: Carátulas y Modalidades</h3>
             <div id="contenedorGuia">
-                <!-- AQUÍ VAN TUS TABLAS DE CARÁTULAS -->
-                <details>
+                <!-- AQUI PEGASTE TUS DETECT/TABLES -->
+                <details open>
 <summary><b>ROBO (Hacer clic para desplegar)</b></summary>
 <br>
 <table width="100%" border="1" cellpadding="8" style="border-collapse: collapse;">
@@ -267,42 +274,35 @@
     <button class="float-btn" onclick="document.getElementById('seccion2').scrollIntoView()">IR A CARÁTULAS ↓</button>
 
     <script>
-        <script>
-function showApp() { 
-    document.getElementById('home').style.display = 'none'; 
-    document.getElementById('app').style.display = 'block'; 
-}
-
-function filtrarGuia() {
-    let input = document.getElementById('buscadorGuia');
-    let filtro = input.value.toLowerCase();
-    let detalles = document.querySelectorAll('#contenedorGuia details');
-
-    detalles.forEach(detalle => {
-        let filas = detalle.querySelectorAll('table tr');
-        let encontroEnEstaTabla = false;
-
-        // Recorremos las filas (empezamos en 1 para saltear el encabezado)
-        for (let i = 1; i < filas.length; i++) {
-            let textoFila = filas[i].textContent.toLowerCase();
-            if (textoFila.includes(filtro)) {
-                filas[i].style.display = ""; // Muestra la fila
-                encontroEnEstaTabla = true;
-            } else {
-                filas[i].style.display = "none"; // Oculta la fila
-            }
+        function showApp() { 
+            document.getElementById('home').style.display = 'none'; 
+            document.getElementById('app').style.display = 'block'; 
         }
 
-        // Si el buscador está vacío, mostramos todo y cerramos detalles, si hay filtro, abrimos
-        if (filtro === "") {
-            detalle.style.display = "";
-            detalle.open = false; 
-        } else {
-            detalle.style.display = encontroEnEstaTabla ? "" : "none";
-            detalle.open = encontroEnEstaTabla; // Abre automáticamente si encontró algo
+        function filtrarGuia() {
+            let filtro = document.getElementById('buscadorGuia').value.toLowerCase();
+            let detalles = document.querySelectorAll('#contenedorGuia details');
+            detalles.forEach(detalle => {
+                let filas = detalle.querySelectorAll('table tr');
+                let encontroEnEstaTabla = false;
+                for (let i = 1; i < filas.length; i++) {
+                    let textoFila = filas[i].textContent.toLowerCase();
+                    if (textoFila.includes(filtro)) {
+                        filas[i].style.display = "";
+                        encontroEnEstaTabla = true;
+                    } else {
+                        filas[i].style.display = "none";
+                    }
+                }
+                if (filtro === "") {
+                    detalle.style.display = "";
+                    detalle.open = false;
+                } else {
+                    detalle.style.display = encontroEnEstaTabla ? "" : "none";
+                    detalle.open = encontroEnEstaTabla;
+                }
+            });
         }
-    });
-}
-</script>
+    </script>
 </body>
 </html>
